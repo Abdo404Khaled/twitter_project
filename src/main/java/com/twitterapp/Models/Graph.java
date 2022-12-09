@@ -8,7 +8,7 @@ import com.twitterapp.Interfaces.Igraph;
 public class Graph implements Igraph{
 
     private Map<Integer,  Pair<User, List<Edge> >> map = new HashMap<>();
-	private Heap heap = new Heap();
+	private Heap heap;
 
 	@Override
 	public void addUser(User user)
@@ -52,6 +52,7 @@ public class Graph implements Igraph{
 	}
 
 	public void processDB(){
+		heap = new Heap(getUserCount());
 		for(Pair<User, List<Edge>> user: map.values())
 			heap.insert(user.getKey());
 	}

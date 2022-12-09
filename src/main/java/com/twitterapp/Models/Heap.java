@@ -1,14 +1,15 @@
 package com.twitterapp.Models;
 
 public class Heap {
-    private User[] heap;
+    public User[] heap;
     private int size;
-    private int MAX = 999999;
+    private int MAX;
 
-    public Heap()
+    public Heap(int MAX)
     {
         this.size = 0;
-        heap = new User[MAX];
+        this.MAX = MAX;
+        heap = new User[this.MAX];
     }
     private int parent(int pos) {return (pos - 1) / 2;}
  
