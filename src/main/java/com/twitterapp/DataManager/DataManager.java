@@ -14,9 +14,10 @@ public class DataManager {
     private String SEPARATOR;
 
     FileReader filereader;
-    BufferedReader bufferedreader;
     FileWriter fileWriter;
     File file;
+
+    BufferedReader bufferedreader;
 
     String line = "";
     String[] tempArr;

@@ -1,17 +1,18 @@
 package com.twitterapp.Models;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
     private int id;
-    private Vector<User> followers;
-    private Vector<User> following;
+    private List<Integer> followers;
+    private List<Integer> following;
 
     public User(int id){
         this.id = id;
-        followers = new Vector<>();
-        following = new Vector<>();
+        followers = new ArrayList<>(0);
+        following = new ArrayList<>(0);
     }
 
     public int get_followers()
@@ -31,12 +32,12 @@ public class User {
 
     public void add_follower(User user)
     {
-        followers.add(user);
+        followers.add(user.get_id());
     }
 
     public void follow(User user)
     {
-        following.add(user);
+        following.add(user.get_id());
     }
 
     @Override
