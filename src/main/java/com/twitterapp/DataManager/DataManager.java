@@ -2,7 +2,6 @@ package com.twitterapp.DataManager;
 
 import java.io.*;
 import java.util.*;
-import com.opencsv.*;
 
 import com.twitterapp.Models.Graph;
 import com.twitterapp.Models.User;
@@ -12,22 +11,23 @@ import java.awt.Desktop;
 
 public class DataManager {
     private String FILE;
-    private char SEPARATOR;
+    private String SEPARATOR;
 
     FileReader filereader;
+    BufferedReader bufferedreader;
     FileWriter fileWriter;
     File file;
 
-    Desktop desktop = Desktop.getDesktop();
-    
-    CSVParser parser;
-    CSVReader reader;
+    String line = "";
+    String[] tempArr;
 
-    Graph dataBase;
+    Desktop desktop = Desktop.getDesktop();
+
+    Graph dataBase = new Graph();;
 
     List<String[]> allData; 
 
-    public DataManager(String FILE, char SEPARATOR){
+    public DataManager(String FILE, String SEPARATOR){
         this.FILE = FILE;
         this.SEPARATOR = SEPARATOR;
         allData = new ArrayList<>();
@@ -37,32 +37,19 @@ public class DataManager {
         this.FILE = FILE;
     }
 
-    public void LoadData(){
-        
-        try{
-            filereader = new FileReader(FILE);
-            parser = new CSVParserBuilder().withSeparator(SEPARATOR).build();
-            reader = new CSVReaderBuilder(filereader).withCSVParser(parser).build();
-            allData = reader.readAll();
-            filereader.close();
-        }catch(Exception e){
-            System.out.println(e.getStackTrace());
-            return;
-        }
-    }
-
-    public Graph ProcessData(){
-        
-        dataBase = new Graph();
-
-        for(String[] row: allData){
-            User user1 = new User(Integer.valueOf(row[0]));
-            User user2 = new User(Integer.valueOf(row[1]));
-            dataBase.follow(user1, user2);
-        } 
-        dataBase.processDB();
-
-        return dataBase;
+    public Graph LoadData() throws IOException{
+            file = new File(FILE);
+            filereader = new FileReader(file);
+            bufferedreader = new BufferedReader(filereader);
+              while((line = bufferedreader.readLine()) != null) {
+                tempArr = line.split(SEPARATOR);
+                User user1 = new User(Integer.valueOf(tempArr[0]));
+                User user2 = new User(Integer.valueOf(tempArr[1]));
+                dataBase.follow(user1, user2);
+              }
+            bufferedreader.close();
+            dataBase.processDB();
+            return dataBase;
     }
 
     public void writeData(String data) throws IOException{
