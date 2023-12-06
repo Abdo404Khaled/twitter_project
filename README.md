@@ -3,9 +3,13 @@ This Java application analyzes a dataset representing Twitter users and their fo
 
 ## Project Structure
 src/main/java/com/twitterapp/
+
 ├── DataManager/
+
 ├── Interfaces/
+
 ├── Models/
+
 ├── App.java
 
 ## Directory Structure Explanation
